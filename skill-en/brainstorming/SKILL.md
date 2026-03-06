@@ -14,24 +14,46 @@ First, understand the current project context, then refine the idea through focu
 ## Process
 
 ### 1. Understand the Idea
-- **Check Context First**: Review current project state (code files, documentation, recent commits).
-- **Focus Areas**: Progressively clarify Goals, Constraints, and Success Criteria.
-- **Abductive Reasoning**: As questions are answered, briefly surface key assumptions and verify them with the user.
-- **Use `AskUserQuestion` tool** for all user-facing questions — let the tool handle interaction format.
+
+This phase is sequential: **first** gather project context via subagent, **then** ask informed questions.
+
+#### 1a. Spawn Context Explorer (subagent) — blocking
+
+Spawn an `Explore` subagent to investigate the project context. **Wait for it to complete** before proceeding.
+
+The subagent MUST write its findings to `.brainstorming/context-handoff.md`.
+
+Use the subagent prompt template from `./references/context-explorer-prompt.md`, replacing `{{IDEA_SUMMARY}}` with the user's idea.
+
+#### 1b. Read Handoff & Clarify Intent
+
+After the subagent completes:
+
+1. **Read** `.brainstorming/context-handoff.md` to absorb the project context.
+2. **Informed questioning** — Now ask the user questions, leveraging what you already know from the handoff:
+   - Skip questions the handoff already answered (tech stack, existing patterns, etc.)
+   - Prioritize the "Open Questions" surfaced by the subagent
+   - **Focus Areas**: Goals, Constraints, and Success Criteria
+   - **Abductive Reasoning**: Surface key assumptions and verify them with the user
+   - **Use `AskUserQuestion` tool** for all user-facing questions
+3. **Validate** — Cross-check user answers against the handoff context. Flag any contradictions (e.g., user wants X but the codebase already does Y).
 
 ### 2. Explore Solutions
 
 Follow a structured reasoning chain to bridge the gap from problem to solution:
 
 #### Step 1: Constraint Analysis
+
 - From confirmed goals and constraints, extract the **core tensions and key decision points**.
 - State explicitly: "Given X goal and Y constraint, the key decision is Z."
 
 #### Step 2: Path Derivation
+
 - For each key decision point, derive **2-3 viable paths**.
 - For each path, explain **why it is feasible** (or why not) based on the constraints identified above.
 
 #### Step 3: Solution Synthesis
+
 - Combine the best paths into **2-3 complete solutions** with tradeoffs.
 - **Systems Thinking**: For each solution, identify key leverage points and potential side effects.
 - State your **recommended solution first**, then explain why.
@@ -39,21 +61,12 @@ Follow a structured reasoning chain to bridge the gap from problem to solution:
 **Backtrack** if any earlier assumption is negated by new information.
 
 ### 3. Present Design
+
 - Start presenting the design **only when** you are confident you understand what to build.
 - **Chunking**: Break the design into sections of approximately 200–300 words.
 - **Incremental Check**: After each section, ask if it aligns with expectations so far.
 - **Coverage**: Architecture, Components, Data Flow, Error Handling, Testing.
 - **Backtrack**: If anything is unclear at any point, stop and clarify immediately.
-
-## Progress Transparency
-
-At the end of each interaction, provide a dynamic "Next Step" indicator:
-
-```
-Current Stage: [Understanding Requirements / Exploring Solutions / Presenting Design]
-Next Step: [specific description]
-(Note: Plan may adjust based on your response)
-```
 
 ## Key Principles
 
