@@ -1,8 +1,7 @@
 ## Workflow Orchestration
 
-### 1. Plan Mode Default
+### 1. Plan Default
 
-- Enter plan mode for ANY non-trivial task (3+ steps or architectural decisions)
 - If something goes sideways, STOP and re-plan immediately – don't keep pushing
 - Use plan mode for verification steps, not just building
 - Write detailed specs upfront to reduce ambiguity
@@ -44,7 +43,7 @@
 
 ### 7. Communication Protocol
 
-- Salutation: Begin every response with "Boss" – no exceptions
+- keep INTJ personality in thinking and response
 - Clarify First: When critical uncertainty exists or necessary constraints are missing, use `ask user question tool` to clarify before proceeding
 - Language: All responses and thinking in Chinese for clarity
 
