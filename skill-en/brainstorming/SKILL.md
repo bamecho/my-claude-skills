@@ -1,6 +1,6 @@
 ---
 name: brainstorming
-description: "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation."
+description: "Use this when the user explicitly asks to brainstorm, or when the task is clearly about upfront design, solution exploration, or requirement shaping before implementation. Avoid loading it for routine implementation work unless that exploratory step is obviously needed."
 ---
 
 # Transforming Ideas into Design & Specifications
@@ -37,28 +37,26 @@ If new information invalidates an earlier assumption, update the task list and r
 
 ### 1. Understand the Idea
 
-This phase is sequential: **first** gather project context via subagent, **then** ask informed questions.
+This phase is sequential: **first** gather enough project context to ask informed questions, **then** ask informed questions.
 
-#### 1a. Spawn Context Explorer (subagent) — blocking
+#### 1a. Gather Context — blocking
 
-Spawn an `Explore` subagent to investigate the project context. **Wait for it to complete** before proceeding.
+If you do not already have the necessary project context, spawn an `Explore` subagent to investigate it. **Wait for it to complete** before proceeding.
 
-The subagent MUST write its findings to `.brainstorming/context-handoff.md`.
+If you already obtained sufficient context through other means, you may skip spawning a subagent and proceed with that existing context instead.
 
-Use the subagent prompt template from `./references/context-explorer-prompt.md`, replacing `{{IDEA_SUMMARY}}` with the user's idea.
+#### 1b. Read Handoff Or Existing Context & Clarify Intent
 
-#### 1b. Read Handoff & Clarify Intent
+After context gathering completes:
 
-After the subagent completes:
-
-1. **Read** `.brainstorming/context-handoff.md` to absorb the project context.
-2. **Informed questioning** — Now ask the user questions, leveraging what you already know from the handoff:
-   - Skip questions the handoff already answered (tech stack, existing patterns, etc.)
-   - Prioritize the "Open Questions" surfaced by the subagent
+1. **Read** the context returned by the subagent, or the equivalent context you already gathered through other means.
+2. **Informed questioning** — Now ask the user questions, leveraging what you already know from the handoff or context:
+   - Skip questions the handoff or context already answered (tech stack, existing patterns, etc.)
+   - Prioritize the "Open Questions" surfaced by the subagent, if any
    - **Focus Areas**: Goals, Constraints, and Success Criteria
    - **Abductive Reasoning**: Surface key assumptions and verify them with the user
    - **Use `AskUserQuestion` tool** for all user-facing questions
-3. **Validate** — Cross-check user answers against the handoff context. Flag any contradictions (e.g., user wants X but the codebase already does Y).
+3. **Validate** — Cross-check user answers against the handoff or equivalent context. Flag any contradictions (e.g., user wants X but the codebase already does Y).
 
 ### 2. Explore Solutions
 
